@@ -1,65 +1,100 @@
+function initialize() {
+    startContainer.style.display = "block"
+    quizContainer.style.display = "none";
+    scoreContainer.style.display = "none";
+}
 
-var score = 0
-var question = document.getElementById("question")
-var answerA = document.getElementById("button1")
-var answerB = document.getElementById("button2")
-var answerC = document.getElementById("button3")
-var answerD = document.getElementById("button4")
-var button = document.getElementsByClassName("answer")
-var questionIndex = 0  
-var correct = true
-var timeLeft = document.querySelector(".timer");
-var secondsLeft = 10
-var startButton = document.querySelector("#start")
-    startButton.addEventListener("click", beginQuiz);
+function showQuiz(){
+    quizContainer.style.display = "block";
+    startContainer.style.display = "none";
+    scoreContainer.style.display = "none";
+}
 
+function showScoreBoard(){
+    startContainer.style.display = "none";
+    quizContainer.style.display = "none";
+    scoreContainer.style.display = "block";
+}
 
+var currentQuestionIndex;
 
+function startQuiz(){
 
-function beginQuiz() {
-    newQuestion()
-    // startTime()
-    for(var i = 0; i < questions[questionIndex].answer.length; i++){
-        button[i].addEventListener("click", function(){
-            questionIndex++
-            console.log('questionIndex: ', questionIndex)
-            newQuestion()
-            if(questions[questionIndex].answer[i].correct){
-                alert ("correct")
-                myScore() = score++
-            }else{
-                alert("Incorrect")
-            }
-            console.log(newQuestion)
-            
-            //else false take off time
-        })
-        // console.log(questionIndex)
-    }
-    // button.addEventListener("click", nextQuestion)
-    console.log(questionIndex)       
+    showQuiz();
+    startTimer();
+    currentQuestionIndex = 0;
+    setQuestion(questions[currentQuestionIndex]);
+
+}
+function endQuiz(){
+    stopTimer()
+    showScoreBoard()
+}
+
+var interval;
+var remainingSeconds;
+
+function startTimer(){
+    remainingSeconds = 60;
+    remainingSecondsSpan.textContent= remainingSeconds;
+    interval = setInterval(function(){
+        remainingSeconds--;
+        remainingSecondsSpan.textContent= remainingSeconds;
+        if(remainingSeconds <= 0){
+            endQuiz()
+        }
     
+    },1000);
+
 }
-
-function myScore(){
-    document.getElementById("score")
-    console.log(myScore)
-}
-
-function newQuestion(){
-    // if(question > 4){
-    //     alert ("Your score is  " + myScore + "/5")
-    // }
-
-    
-    question.innerHTML = questions[questionIndex].question;
-    answerA.innerHTML = questions[questionIndex].answer[0].text;
-    answerB.innerHTML = questions[questionIndex].answer[1].text;
-    answerC.innerHTML = questions[questionIndex].answer[2].text;
-    answerD.innerHTML = questions[questionIndex].answer[3].text;
+function wrongAnswer(){
+    remainingSeconds-= 5;
+        remainingSecondsSpan.textContent= remainingSeconds;
+        if(remainingSeconds <= 0){
+            endQuiz()
+        }
 
 }
 
+function stopTimer(){
+    clearInterval(interval)
+}
+
+var startContainer = document.getElementById("start-container");
+var quizContainer = document.getElementById("quiz-container");
+var scoreContainer = document.getElementById("score-container");
+var remainingSecondsSpan = document.getElementById("remaining-seconds");
+var question = document.getElementById("question");
+var answerA = document.getElementById("button1");
+var answerB = document.getElementById("button2");
+var answerC = document.getElementById("button3");
+var answerD = document.getElementById("button4");
+
+function setQuestion(currentQuestion){
+    question.innerHTML=currentQuestion.question;
+    answerA.textContent=currentQuestion.answer[0].text;
+    answerB.textContent=currentQuestion.answer[1].text;
+    answerC.textContent=currentQuestion.answer[2].text;
+    answerD.textContent=currentQuestion.answer[3].text;
+
+}
+var score = 0;
+
+function selectAnswer(answerIndex){
+    if(questions[currentQuestionIndex].answer[answerIndex].correct){
+    alert("correct")
+    score++
+}else{
+    wrongAnswer()
+    alert("incorrect")
+}
+currentQuestionIndex++
+if(currentQuestionIndex > 4){
+    endQuiz()
+};
+setQuestion(questions[currentQuestionIndex]);
+
+};
 
 var questions = [
 { question: "What does CSS stand for?",
@@ -98,37 +133,11 @@ var questions = [
        {text: "physically painful", correct: true}
    ]}
 ]
-var saveScore = ""
-function saveScore(){
-    prompt("add your initials to save your score")
-    //display on scoreboard ( save score + myScore + "/5")
 
+var totalScore = document.getElementById("final-score")
+function showScoreBoard(){
+    var totalScore = score
+    console.log(totalScore)
+    alert("You got " + score + "out of 5")
 }
 
-
-// const newInterval=setInterval(function(){
-//     console.log('Hello');
-//   }, 1000);
-// function startTime() {
-// var timerInterval = setInterval(function() {
-//     time--;
-//     timeLeft.textContent = secondsLeft + " seconds left.";
-  
-//       if(time === 0) {
-//         clearInterval(timerInterval);
-//         sendMessage("times up");
-//       }
-  
-//     }, 1000);
-//   }
-    // for(var i = 0; i < questions[questionIndex].answer.length; i++){
-    //     button[i].addEventListener("click", nextQuestion)
-    //     console.log(questionIndex)
-    // }
-    // // button.addEventListener("click", nextQuestion)
-    // console.log(questionIndex)
-
-// function nextQuestion(){
-//     questionIndex++
-// console.log(questionIndex)
-// }
