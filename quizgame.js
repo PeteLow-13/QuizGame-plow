@@ -2,6 +2,7 @@ function initialize() {
     startContainer.style.display = "block"
     quizContainer.style.display = "none";
     scoreContainer.style.display = "none";
+    clearScore();
 }
 
 function showQuiz(){
@@ -19,16 +20,17 @@ function showScoreBoard(){
 var currentQuestionIndex;
 
 function startQuiz(){
-
     showQuiz();
     startTimer();
     currentQuestionIndex = 0;
     setQuestion(questions[currentQuestionIndex]);
-
 }
 function endQuiz(){
-    stopTimer()
-    showScoreBoard()
+    stopTimer();
+    showScoreBoard();
+    showScore();
+    getUserName();
+    
 }
 
 var interval;
@@ -76,26 +78,25 @@ function setQuestion(currentQuestion){
     answerB.textContent=currentQuestion.answer[1].text;
     answerC.textContent=currentQuestion.answer[2].text;
     answerD.textContent=currentQuestion.answer[3].text;
-
 }
 var score = 0;
 
 function selectAnswer(answerIndex){
     if(questions[currentQuestionIndex].answer[answerIndex].correct){
-    alert("correct")
-    score++
+    alert("correct");
+    score++;
 }else{
-    wrongAnswer()
-    alert("incorrect")
+    wrongAnswer();
+    alert("incorrect");
 }
 currentQuestionIndex++
-if(currentQuestionIndex > 4){
-    endQuiz()
+if(currentQuestionIndex > 4 || answerIndex > 4){
+    endQuiz()    
 };
 setQuestion(questions[currentQuestionIndex]);
 
+console.log(score)
 };
-
 var questions = [
 { question: "What does CSS stand for?",
    answer:[
@@ -134,10 +135,25 @@ var questions = [
    ]}
 ]
 
-var totalScore = document.getElementById("final-score")
-function showScoreBoard(){
-    var totalScore = score
-    console.log(totalScore)
-    alert("You got " + score + "out of 5")
+function showScore(){
+    alert("You got " + score + " out of 5 correct")
 }
 
+var userName = ""
+ 
+function getUserName(){
+    userName = prompt("Enter your name");
+
+var playerScore = userName + (": ") + score 
+console.log(playerScore)
+console.log(userName)
+var totalScoreSpan = document.getElementById("final-score");
+    totalScoreSpan.textContent = playerScore +( " out of 5");
+    console.log(userName)
+}
+function clearScore(){
+    score = 0;
+}
+// function clearUserName(){
+//     userName = ""
+// }
