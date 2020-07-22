@@ -145,15 +145,12 @@ function getUserName(){
     userName = prompt("Enter your name");
 
 var playerScore = userName + (": ") + score 
-console.log(playerScore)
-console.log(userName)
+
 var totalScoreSpan = document.getElementById("final-score");
     totalScoreSpan.textContent = playerScore +( " out of 5");
-    console.log(userName)
+    
 }
 function clearScore(){
     score = 0;
 }
-// function clearUserName(){
-//     userName = ""
-// }
+
