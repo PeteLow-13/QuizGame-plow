@@ -7,10 +7,10 @@
 
 
 h1 {
-    background-color: black;
+    background-color: rgb(54, 201, 164);
     text-align: center; 
-    text-shadow: rgb(230, 34, 132);
-    color: rgb(54, 201, 164);
+    color:rgb(230, 34, 132);
+
     
 }  
 
@@ -22,10 +22,10 @@ body {
     height: 100vw;
     justify-content: center;
     align-items: center;
-    background-color: whitesmoke;
+    background-color: black;
 
 }
-start-container{
+.start-container{
     width: 800px;
     max-width: 80%;
     justify-content: center;
@@ -39,7 +39,10 @@ start-container{
     justify-content: center;
     background-color: rgb(54, 201, 164);
     border-radius: 5px;
+    border-color: rgb(230, 34, 132);
+    border-width: 2px;
     padding: 10px;
+
     
 }
 
@@ -50,10 +53,12 @@ start-container{
     margin: 20px;
 }
 
-.button {
+button {
     background-color: rgb(230, 34, 132);
-    color: rgb(54, 201, 164);
-    border: 2px black; 
+    color: black;
+    border-color: black;
+    border-width: 2px; 
+    border-radius: 5px;
     
 }
 scorecontainer{
